@@ -10,12 +10,11 @@ function Modal({ setOpenModal }) {
           <button onClick={() => setOpenModal(false)}> X </button>
         </div>
         <div className="title">
-          <h1>Welcome to Spotifly!</h1>
+          <h1>Welcome to Scavenger AR!</h1>
         </div>
         <div className="body">
           <p>
-            Spotifly is a Spotify-based Wordle-varient where you can guess your
-            favorite songs on Spotify!
+            Scavenger AR is an scavenger generator
           </p>
         </div>
         <p className="note">
@@ -24,15 +23,14 @@ function Modal({ setOpenModal }) {
           Step 3. Guess the first five letters of the song title! <br></br>
         </p>
         <p className="note">
-          Note: If the song title is less than 5 letters long, replace the remaining
-          letters with "1"{" "}
+            Hello World
         </p>
 
         <div className="footer">
           {/* <button onClick={() => setOpenModal(false)}>
               Log into Spotify
             </button> */}
-          <button onClick={() => setOpenModal(false)}> Let's Play! </button>
+          <button onClick={() => setOpenModal(false)}> Let's Go! </button>
         </div>
       </div>
     </div>

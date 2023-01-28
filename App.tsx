@@ -27,6 +27,7 @@ const render = (status: Status) => {
   return <h1>{status}</h1>;
 };
 
+
 const App: React.VFC = () => {
   const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
   const [zoom, setZoom] = React.useState(3); // initial zoom
@@ -34,9 +35,19 @@ const App: React.VFC = () => {
     lat: 0,
     lng: 0,
   });
-  const [isCopied, setIsCopied] = React.useState(false);
   const [link, setLink] = React.useState("https://meek-alpaca-abddd6.netlify.app/?entities=")
 
+  React.useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?key=" + API_KEY + "&libraries=places&callback=initMap";
+    script.async = true;
+    document.body.appendChild(script);
+  
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, []);
+  
   const onClick = (e: google.maps.MapMouseEvent) => {
     // avoid directly mutating state
     setClicks([...clicks, e.latLng!]);
@@ -71,6 +82,9 @@ const App: React.VFC = () => {
     setLink("https://meek-alpaca-abddd6.netlify.app/?entities=");
   }
 
+  // const searches = document.getElementById("pac-input") as HTMLInputElement;
+  // const searchBar = new google.maps.places.SearchBox(searches);
+
   const form = (
     <div
       style={{
@@ -82,8 +96,6 @@ const App: React.VFC = () => {
     >
       {/* <CopyToClipboard text={link}> */}
       <button onClick = {() => generateLink()}>Generate Link</button>
-      {/* <span>Copy to clipboard with span</span> */}
-      {/* </CopyToClipboard> */}
       <label htmlFor="zoom">Zoom</label>
       <input
         type="number"
@@ -118,6 +130,7 @@ const App: React.VFC = () => {
       {clicks.map((latLng, i) => (
         <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
       ))}
+    
       <button onClick={() => clearPlaces()}>Clear</button>
     </div>
   );
@@ -158,7 +171,7 @@ const Map: React.FC<MapProps> = ({
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [map, setMap] = React.useState<google.maps.Map>();
-
+  
   React.useEffect(() => {
     if (ref.current && !map) {
       setMap(new window.google.maps.Map(ref.current, {}));

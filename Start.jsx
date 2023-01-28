@@ -5,18 +5,18 @@ import App from "./App.tsx";
 
 function Start() {
   const [openModal, setOpenModal] = useState(true);
-  let visited = localStorage["alreadyVisited"];
+  // let visited = localStorage["alreadyVisited"];
   useEffect(() => {
     let isCancelled = false;
 
-    if (visited) {
-      setOpenModal(false);
-      //do not view Popup
-    } else {
+    // if (visited) {
+    //   setOpenModal(false);
+    //   //do not view Popup
+    // } else {
       //this is the first time
-      localStorage["alreadyVisited"] = true;
+      // localStorage["alreadyVisited"] = true;
       setOpenModal(true);
-    }
+    // }
     return () => {
       isCancelled = true;
     };
@@ -26,8 +26,6 @@ function Start() {
     <>
       {openModal && <Modal setOpenModal={setOpenModal} />}
       {!openModal && <App setOpenModal={!setOpenModal} />}
-      {/* <SpotifyAccess></SpotifyAccess> */}
-      {/* <WordleSetup></WordleSetup> */}
     </>
   );
 }

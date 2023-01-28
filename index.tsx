@@ -19,6 +19,9 @@ import { createRoot } from "react-dom/client";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { createCustomEqual } from "fast-equals";
 import { isLatLngLiteral } from "@googlemaps/typescript-guards";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
+const API_KEY = "AIzaSyCOa-L3GUCCSp4NJ8CCf6ZEsXHB0TlJmh8"
 
 const render = (status: Status) => {
   return <h1>{status}</h1>;
@@ -31,6 +34,8 @@ const App: React.VFC = () => {
     lat: 0,
     lng: 0,
   });
+  const [isCopied, setIsCopied] = React.useState(false);
+  const [link, setLink] = React.useState("https://meek-alpaca-abddd6.netlify.app/?entities=")
 
   const onClick = (e: google.maps.MapMouseEvent) => {
     // avoid directly mutating state
@@ -43,6 +48,29 @@ const App: React.VFC = () => {
     setCenter(m.getCenter()!.toJSON());
   };
 
+  const generateLink = () => {
+    var returnLink = "https://meek-alpaca-abddd6.netlify.app/?entities="
+    // 41.826835_-71.399710,41.827835_-71.399710
+    {clicks.map((latLng, i) => (
+      // returnLink += JSON.stringify(latLng.toJSON(), null, 2)
+      returnLink += latLng.lat() + "_" + latLng.lng() + ","
+    ))}
+    returnLink = returnLink.slice(0,-1);
+
+    var textField = document.createElement('textarea');
+    textField.innerText = returnLink;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    textField.remove();
+    setLink(returnLink);
+  }
+
+  const clearPlaces = () => {
+    setClicks([]);
+    setLink("https://meek-alpaca-abddd6.netlify.app/?entities=");
+  }
+
   const form = (
     <div
       style={{
@@ -52,6 +80,10 @@ const App: React.VFC = () => {
         overflow: "auto",
       }}
     >
+      {/* <CopyToClipboard text={link}> */}
+      <button onClick = {() => generateLink()}>Generate Link</button>
+      {/* <span>Copy to clipboard with span</span> */}
+      {/* </CopyToClipboard> */}
       <label htmlFor="zoom">Zoom</label>
       <input
         type="number"
@@ -86,13 +118,13 @@ const App: React.VFC = () => {
       {clicks.map((latLng, i) => (
         <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
       ))}
-      <button onClick={() => setClicks([])}>Clear</button>
+      <button onClick={() => clearPlaces()}>Clear</button>
     </div>
   );
 
   return (
     <div style={{ display: "flex", height: "100%" }}>
-      <Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY!} render={render}>
+      <Wrapper apiKey={API_KEY} render={render}>
         <Map
           center={center}
           onClick={onClick}

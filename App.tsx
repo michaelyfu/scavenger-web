@@ -60,7 +60,7 @@ const App: React.VFC = () => {
 
   const generateLink = () => {
     // var returnLink = "https://jade-melba-42f53d.netlify.app/?entities="
-    var returnLink = "https://quiet-kashata-f6a866.netlify.app/entities="
+    var returnLink = "https://quiet-kashata-f6a866.netlify.app/?entities="
     // 41.826835_-71.399710,41.827835_-71.399710
     {clicks.map((latLng, i) => (
       // returnLink += JSON.stringify(latLng.toJSON(), null, 2)

@@ -35,7 +35,6 @@ const App: React.VFC = () => {
     lat: 0,
     lng: 0,
   });
-  const [link, setLink] = React.useState("https://meek-alpaca-abddd6.netlify.app/?entities=")
 
   React.useEffect(() => {
     const script = document.createElement('script');
@@ -60,7 +59,8 @@ const App: React.VFC = () => {
   };
 
   const generateLink = () => {
-    var returnLink = "https://meek-alpaca-abddd6.netlify.app/?entities="
+    // var returnLink = "https://meek-alpaca-abddd6.netlify.app/?entities="
+    var returnLink = "https://jade-melba-42f53d.netlify.app/?entities="
     // 41.826835_-71.399710,41.827835_-71.399710
     {clicks.map((latLng, i) => (
       // returnLink += JSON.stringify(latLng.toJSON(), null, 2)
@@ -74,12 +74,10 @@ const App: React.VFC = () => {
     textField.select();
     document.execCommand('copy');
     textField.remove();
-    setLink(returnLink);
   }
 
   const clearPlaces = () => {
     setClicks([]);
-    setLink("https://meek-alpaca-abddd6.netlify.app/?entities=");
   }
 
   // const searches = document.getElementById("pac-input") as HTMLInputElement;
@@ -128,7 +126,7 @@ const App: React.VFC = () => {
       />
       <h3>{clicks.length === 0 ? "Click on map to add markers" : "Clicks"}</h3>
       {clicks.map((latLng, i) => (
-        <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
+        <pre key={i}>Point {i}: {JSON.stringify(latLng.toJSON(), null, 2)}</pre>
       ))}
     
       <button onClick={() => clearPlaces()}>Clear</button>

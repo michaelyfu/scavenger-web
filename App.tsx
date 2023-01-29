@@ -22,6 +22,55 @@ import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {Button, TextField} from '@mui/material';
 import Input from '@mui/joy/Input';
+import "./App.css";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  status: {
+    danger: '#e53e3e',
+  },
+  palette: {
+    primary: {
+      main: '#fca5a5',
+      darker: '#053e85',
+    },
+    neutral: {
+      main: '#f7ba2a',
+      contrastText: '#fff',
+    },
+  },
+});
+
+
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+
+  interface Palette {
+    neutral: Palette['primary'];
+  }
+
+  interface PaletteOptions {
+    neutral: PaletteOptions['primary'];
+  }
+
+  interface PaletteColor {
+    darker?: string;
+  }
+
+  interface SimplePaletteColorOptions {
+    darker?: string;
+  }
+
+  interface ThemeOptions {
+    status: {
+      danger: React.CSSProperties['color'];
+    };
+  }
+}
 
 const API_KEY = "AIzaSyCOa-L3GUCCSp4NJ8CCf6ZEsXHB0TlJmh8"
 
@@ -93,9 +142,11 @@ const [popUp, setPopUp] = React.useState(false);
       }}
     >
       {/* <CopyToClipboard text={link}> */}
-      <Button variant="outlined" onClick = {() => generateLink()}>Generate Link
+      <ThemeProvider theme={theme}>
+      <Button color="neutral" variant="outlined" onClick = {() => generateLink()}>Generate Link
       </Button>
-      <label style={{color: 'red', fontWeight: 'normal', fontSize: "1.0rem"}}>{popUp ? "Link Copied" : ""}</label>
+      </ThemeProvider>
+      <label style={{color: '#d0b277', fontWeight: 'normal', fontSize: "1rem", fontFamily: "Roboto, serif"}}>{popUp ? "Link Copied" : ""}</label>
       <label htmlFor="zoom">Zoom</label>
       <Input
         variant="outlined"
@@ -131,10 +182,12 @@ const [popUp, setPopUp] = React.useState(false);
       />
       <h3>{clicks.length === 0 ? "Click on map to add markers" : "Clicks"}</h3>
       {clicks.map((latLng, i) => (
-        <pre key={i}>Point {i}: {JSON.stringify(latLng.toJSON(), null, 2)}</pre>
+        <pre key={i} style={{fontFamily:"Robot, serif"}}>Point {i}: {JSON.stringify(latLng.toJSON(), null, 2)}</pre>
       ))}
-    
-      <Button onClick={() => clearPlaces()} variant="outlined">Clear</Button>
+
+    <ThemeProvider theme={theme}>
+      <Button color="neutral" onClick={() => clearPlaces()} variant="outlined">Clear</Button>
+      </ThemeProvider>
     </div>
   );
 

@@ -1,0 +1,23 @@
+/* @font-face {
+    font-family: HelveticaNeueLT;
+    src: url("./Helvetica Neue LT Regular.otf") format("opentype");
+  } */
+html {
+    /* background-color: #e2e8f0; */
+    background-color: #462515;
+    font-family: "Roboto", serif;
+    /* color: #e7964a; */
+    /* color: #f5ad40; */
+    color: #f7ba2a;
+}
+
+body {
+    font-family: "Roboto", serif;
+}
+
+
+/*
+MAIN COLOR: #462515
+TEXT COLOR: #e7964a
+TREE COLOR: #822b0e
+*/

@@ -12,11 +12,11 @@
     width: 500px;
     height: 500px;
     border-radius: 12px;
-    background-color: #121212;
+    background-color: #462515;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     flex-direction: column;
-    color: white;
+    color: #f7ba2a;
     padding: 25px;
   }
   
@@ -61,10 +61,14 @@
       height: 45px;
       margin: 10px;
       border: none;
-      background-color: #1DB954;
+      background-color: #dc2626;
       color: white;
       border-radius: 8px;
       font-size: 20px;
       cursor: pointer;
     }
-    
+
+
+    /* html {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    } */

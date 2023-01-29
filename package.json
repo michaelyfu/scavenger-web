@@ -33,8 +33,12 @@
   },
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@googlemaps/typescript-guards": "^2.0.3",
+    "@mui/joy": "^5.0.0-alpha.64",
+    "@mui/material": "^5.11.6",
     "fast-equals": "^4.0.3",
     "ngeohash": "^0.6.3",
     "react": "^18.2.0",

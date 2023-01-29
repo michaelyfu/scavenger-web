@@ -20,13 +20,14 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { createCustomEqual } from "fast-equals";
 import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {Button, TextField} from '@mui/material';
+import Input from '@mui/joy/Input';
 
 const API_KEY = "AIzaSyCOa-L3GUCCSp4NJ8CCf6ZEsXHB0TlJmh8"
 
 const render = (status: Status) => {
   return <h1>{status}</h1>;
 };
-
 
 const App: React.VFC = () => {
   const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
@@ -37,14 +38,10 @@ const App: React.VFC = () => {
   });
 
   React.useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://maps.googleapis.com/maps/api/js?key=" + API_KEY + "&libraries=places&callback=initMap";
-    script.async = true;
-    document.body.appendChild(script);
-  
-    return () => {
-      document.body.removeChild(script);
-    }
+    const interval = setInterval(() => {
+      setPopUp(false);
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
   
   const onClick = (e: google.maps.MapMouseEvent) => {
@@ -74,11 +71,14 @@ const App: React.VFC = () => {
     textField.select();
     document.execCommand('copy');
     textField.remove();
+    setPopUp(true);
   }
 
   const clearPlaces = () => {
     setClicks([]);
   }
+  
+const [popUp, setPopUp] = React.useState(false);
 
   // const searches = document.getElementById("pac-input") as HTMLInputElement;
   // const searchBar = new google.maps.places.SearchBox(searches);
@@ -93,9 +93,12 @@ const App: React.VFC = () => {
       }}
     >
       {/* <CopyToClipboard text={link}> */}
-      <button onClick = {() => generateLink()}>Generate Link</button>
+      <Button variant="outlined" onClick = {() => generateLink()}>Generate Link
+      </Button>
+      <label style={{color: 'red', fontWeight: 'normal', fontSize: "1.0rem"}}>{popUp ? "Link Copied" : ""}</label>
       <label htmlFor="zoom">Zoom</label>
-      <input
+      <Input
+        variant="outlined"
         type="number"
         id="zoom"
         name="zoom"
@@ -104,7 +107,8 @@ const App: React.VFC = () => {
       />
       <br />
       <label htmlFor="lat">Latitude</label>
-      <input
+      <Input
+        variant="outlined"
         type="number"
         id="lat"
         name="lat"
@@ -115,7 +119,8 @@ const App: React.VFC = () => {
       />
       <br />
       <label htmlFor="lng">Longitude</label>
-      <input
+      <Input
+        variant="outlined"
         type="number"
         id="lng"
         name="lng"
@@ -129,7 +134,7 @@ const App: React.VFC = () => {
         <pre key={i}>Point {i}: {JSON.stringify(latLng.toJSON(), null, 2)}</pre>
       ))}
     
-      <button onClick={() => clearPlaces()}>Clear</button>
+      <Button onClick={() => clearPlaces()} variant="outlined">Clear</Button>
     </div>
   );
 

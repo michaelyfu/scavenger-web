@@ -18,9 +18,9 @@ function Modal({ setOpenModal }) {
           </p>
         </div>
         <p className="note">
-          Step 1. Log into Spotify Account <br></br>
-          Step 2. Click Get Random Song <br></br>
-          Step 3. Guess the first five letters of the song title! <br></br>
+          Step 1. Click on map to select your Scavenger Hunt Locations <br></br>
+          Step 2. Generate a link you can send to your friends <br></br>
+          Step 3. Have your users ! <br></br>
         </p>
         <p className="note">
             Hello World

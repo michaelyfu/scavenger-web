@@ -24,14 +24,7 @@ function Modal({ setOpenModal }) {
           Step 3. Have your users play your Scavenger Hunt <span style={{color: "#e7964a", fontWeight: "bold"}}>in real life!</span><br></br>
         </p>
         </div>
-        {/* <p className="note">
-            Hello World
-        </p> */}
-
         <div className="footer">
-          {/* <button onClick={() => setOpenModal(false)}>
-              Log into Spotify
-            </button> */}
           <button onClick={() => setOpenModal(false)} style={{backgroundColor: "#f7ba2a", color: "#0f0f0f", fontWeight: "bold"}}> Let's Go! </button>
         </div>
       </div>

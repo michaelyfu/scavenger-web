@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import Modal from "./Modal.jsx";
+import Modal from "./Components/Modal.jsx";
 import App from "./App.tsx";
 
 function Start() {

@@ -1,19 +1,3 @@
-/*
- * Copyright 2021 Google LLC. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
@@ -25,11 +9,10 @@ import Input from '@mui/joy/Input';
 import "./App.css";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useState, useEffect, useRef } from "react";
+import Marker from "./Components/Marker";
+import Map from "./Components/Map";
 
 const theme = createTheme({
-  status: {
-    danger: '#e53e3e',
-  },
   palette: {
     primary: {
       main: '#fca5a5',
@@ -93,8 +76,6 @@ function App() {
     setPopUp(true);
   }
   
-
-
   const form = ( // form on right hand side
     <div
       style={{
@@ -143,8 +124,8 @@ function App() {
         }
       />
       <h3>{clicks.length === 0 ? "Click on map to add markers" : "Clicks"}</h3>
-      {clicks.map((latLng, i) => (
-        <pre key={i} style={{fontFamily:"Robot, serif"}}>Point {i}: {JSON.stringify(latLng.toJSON(), null, 2)}</pre>
+      {clicks.map((latLng, i) => ( 
+        <pre key={i} style={{fontFamily:"Robot, serif"}}>Point {i}: {JSON.stringify(latLng.toJSON(), null, 2)}</pre> // adds to list
       ))}
 
     <ThemeProvider theme={theme}>
@@ -173,89 +154,5 @@ function App() {
     </div>
   );
 };
-interface MapProps extends google.maps.MapOptions { // extends the MapOptions interface from the Google Maps JavaScript API
-  style: { [key: string]: string };
-  onClick?: (e: google.maps.MapMouseEvent) => void;
-  onIdle?: (map: google.maps.Map) => void;
-  children?: React.ReactNode;
-}
-
-const Map: React.FC<MapProps> = ({
-  onClick,
-  onIdle,
-  children,
-  style,
-  ...options
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<google.maps.Map>();
-  
-  useEffect(() => {
-    if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {}));
-    }
-  }, [ref, map]);
-
-  useEffect(() => {
-    if (map) {
-      map.setOptions(options);
-    }
-  }, [map, options]);
-
-  useEffect(() => {
-    if (map) {
-      ["click", "idle"].forEach((eventName) =>
-        google.maps.event.clearListeners(map, eventName)
-      );
-
-      if (onClick) {
-        map.addListener("click", onClick);
-      }
-
-      if (onIdle) {
-        map.addListener("idle", () => onIdle(map));
-      }
-    }
-  }, [map, onClick, onIdle]);
-
-  return (
-    <>
-      <div ref={ref} style={style} />
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          // set the map prop on the child component
-          // @ts-ignore
-          return React.cloneElement(child, { map });
-        }
-      })}
-    </>
-  );
-};
-
-function Marker(options: any) {
-  const [marker, setMarker] = useState<google.maps.Marker>();
-
-  useEffect(() => {
-    if (!marker) {
-      setMarker(new google.maps.Marker());
-    }
-
-    // remove marker from map on unmount
-    return () => {
-      if (marker) {
-        marker.setMap(null);
-      }
-    };
-  }, [marker]);
-
-  useEffect(() => {
-    if (marker) {
-      marker.setOptions(options);
-    }
-  }, [marker, options]);
-
-  return null;
-};
-
 
 export default App;

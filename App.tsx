@@ -43,10 +43,9 @@ const theme = createTheme({
 });
 
 const API_KEY = "AIzaSyCOa-L3GUCCSp4NJ8CCf6ZEsXHB0TlJmh8"
-// const API_KEY = process.env.VITE_GOOGLE_MAPS_API_KEY
 
 function App() {
-  const [clicks, setClicks] = useState<google.maps.LatLng[]>([]);
+  const [clicks, setClicks] = useState<google.maps.LatLng[]>([]); // stores a LatLngLiteral object
   const [zoom, setZoom] = useState(3);
   const [popUp, setPopUp] = useState(false);
   const [center, setCenter] = useState<google.maps.LatLngLiteral>({
@@ -77,8 +76,6 @@ function App() {
   };
 
   function generateLink() {
-    // let returnLink = "https://jade-melba-42f53d.netlify.app/?entities="
-    // let returnLink = "https://quiet-kashata-f6a866.netlify.app/?entities="
     let returnLink = "https://marvelous-heliotrope-713170.netlify.app/?entities="
     // 41.826835_-71.399710,41.827835_-71.399710
     {clicks.map((latLng, i) => (
@@ -87,7 +84,7 @@ function App() {
     ))}
     returnLink = returnLink.slice(0,-1);
 
-    let textField = document.createElement('textarea');
+    let textField = document.createElement('textarea'); // pop up for copying text button
     textField.innerText = returnLink;
     document.body.appendChild(textField);
     textField.select();
@@ -176,7 +173,7 @@ function App() {
     </div>
   );
 };
-interface MapProps extends google.maps.MapOptions {
+interface MapProps extends google.maps.MapOptions { // extends the MapOptions interface from the Google Maps JavaScript API
   style: { [key: string]: string };
   onClick?: (e: google.maps.MapMouseEvent) => void;
   onIdle?: (map: google.maps.Map) => void;

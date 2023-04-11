@@ -1,14 +1,10 @@
 import * as React from "react";
-import { createRoot } from "react-dom/client";
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import { createCustomEqual } from "fast-equals";
-import { isLatLngLiteral } from "@googlemaps/typescript-guards";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {Button, TextField} from '@mui/material';
+import { Wrapper } from "@googlemaps/react-wrapper";
+import {Button} from '@mui/material';
 import Input from '@mui/joy/Input';
 import "./App.css";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Marker from "./Components/Marker";
 import Map from "./Components/Map";
 
